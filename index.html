@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>z7x8c9 Roblox Scripts Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Comic Neue', sans-serif;
+            font-weight: 700; /* Bold for Comic Neue */
+            background: #000000; /* Black background */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        /* Pulsating glow background */
+        .glow-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin: 40px 0;
+            color: #ffffff;
+            font-size: 3.5em;
+            font-weight: 700; /* Bold for Comic Neue */
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Script container */
+        .script-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            width: 80%;
+            max-width: 800px;
+            margin-bottom: 40px;
+        }
+
+        .script {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            color: #ffffff;
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .script-title {
+            font-size: 1.8em;
+            font-weight: 700; /* Bold for Comic Neue */
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .script-code {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 10px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            word-break: break-all;
+            position: relative;
+        }
+
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #000000; /* Black copy button */
+            color: #ffffff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8em;
+            transition: background 0.3s ease;
+        }
+
+        .copy-button:hover {
+            background: #333333; /* Slightly lighter black on hover */
+        }
+
+        .copy-button:active {
+            transform: scale(0.95);
+        }
+
+        /* Responsive design */
+        @media (max-width: 600px) {
+            .header {
+                font-size: 2.5em;
+            }
+
+            .script-container {
+                width: 90%;
+            }
+
+            .script-title {
+                font-size: 1.5em;
+            }
+
+            .script-code {
+                font-size: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-background"></div>
+    <h1 class="header">z7x8c9 Roblox Scripts Hub</h1>
+    <div class="script-container" id="scriptContainer"></div>
+
+    <script>
+        // Fetch script names from the server
+        fetch('/api/scripts')
+            .then(response => response.json())
+            .then(scripts => {
+                const scriptContainer = document.getElementById('scriptContainer');
+
+                scripts.forEach((scriptName, index) => {
+                    const scriptDiv = document.createElement('div');
+                    scriptDiv.className = 'script';
+                    scriptDiv.style.animationDelay = `${index * 0.2}s`;
+
+                    const title = document.createElement('div');
+                    title.className = 'script-title';
+                    title.textContent = scriptName;
+
+                    const code = document.createElement('div');
+                    code.className = 'script-code';
+                    code.textContent = `loadstring(game:HttpGet('https://github.com/z7x8c9/RobloxScripts/raw/refs/heads/main/scripts/${scriptName}'))()`;
+
+                    const copyButton = document.createElement('button');
+                    copyButton.className = 'copy-button';
+                    copyButton.textContent = 'Copy';
+                    copyButton.onclick = () => {
+                        navigator.clipboard.writeText(code.textContent).then(() => {
+                            copyButton.textContent = 'Copied!';
+                            setTimeout(() => {
+                                copyButton.textContent = 'Copy';
+                            }, 2000);
+                        });
+                    };
+
+                    code.appendChild(copyButton);
+                    scriptDiv.appendChild(title);
+                    scriptDiv.appendChild(code);
+                    scriptContainer.appendChild(scriptDiv);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching scripts:', error);
+                const scriptContainer = document.getElementById('scriptContainer');
+                scriptContainer.innerHTML = '<p style="color: #ffffff;">Error loading scripts. Please try again later.</p>';
+            });
+    </script>
+</body>
+</html>
