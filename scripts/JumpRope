@@ -21,14 +21,14 @@ local rewardCategories = {
 }
 
 -- Theme settings
-local currentTheme = "Dark"
+local currentTheme = "Light"
 local themes = {
     Dark = {
         frameBg = Color3.fromRGB(30, 30, 30),
         frameTransparency = 0.3,
         frameStroke = Color3.fromRGB(255, 255, 255),
         buttonBg = Color3.fromRGB(0, 0, 0),
-        buttonTransparency = 0.2,
+        buttonTransparency = 0.5,
         buttonStroke = Color3.fromRGB(255, 255, 255),
         textColor = Color3.fromRGB(255, 255, 255),
         gradientStart = Color3.fromRGB(40, 40, 40),
@@ -39,7 +39,7 @@ local themes = {
         frameTransparency = 0.3,
         frameStroke = Color3.fromRGB(0, 0, 0),
         buttonBg = Color3.fromRGB(255, 255, 255),
-        buttonTransparency = 0.2,
+        buttonTransparency = 0.5,
         buttonStroke = Color3.fromRGB(0, 0, 0),
         textColor = Color3.fromRGB(0, 0, 0),
         gradientStart = Color3.fromRGB(240, 240, 240),
